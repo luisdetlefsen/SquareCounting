@@ -6,6 +6,8 @@ var o = { x: 50, y: 50 };
 
 var ctx = c.getContext("2d");
 
+var timeouts = [];
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF';
     var color = '#';
@@ -50,8 +52,8 @@ function drawSquares(r, c) {
         for (let j = 0; j < c - 1; j++) {
             t = 1;
             while (t < r - i && t < c - j) {
-                setTimeout(drawSquare, delay * z, o.x + (j * s), o.y + (i * s), s * t);
-                setTimeout(setResult, delay * z, ++result);
+                timeouts.push(setTimeout(drawSquare, delay * z, o.x + (j * s), o.y + (i * s), s * t));
+                timeouts.push(setTimeout(setResult, delay * z, ++result));
                 t++;
                 z++;
                 //  result++;
@@ -82,8 +84,8 @@ function drawSquares(r, c) {
 
                     if (p3x <= c - 1 && p3y <= r - 1 && p4x <= c - 1 && p4y <= r - 1) {
 
-                        setTimeout(drawDistortedSquare, delay * z, o.x + p1x * s, o.y + p1y * s, o.x + p2x * s, o.y + p2y * s, o.x + p3x * s, o.y + p3y * s, o.x + p4x * s, o.y + p4y * s);
-                        setTimeout(setResult, delay * z, ++result);
+                        timeouts.push(setTimeout(drawDistortedSquare, delay * z, o.x + p1x * s, o.y + p1y * s, o.x + p2x * s, o.y + p2y * s, o.x + p3x * s, o.y + p3y * s, o.x + p4x * s, o.y + p4y * s));
+                        timeouts.push(setTimeout(setResult, delay * z, ++result));
                         z++;
                         //  result++;
 
@@ -93,6 +95,12 @@ function drawSquares(r, c) {
         }
     }
     setTimeout(function () { alert("Completed"); }, delay * z);
+}
+
+function stop() {
+    for (let i = 0; i < timeouts.length; i++) {
+        window.clearTimeout(timeouts[i]);
+    }
 }
 
 function resetGrid() {
@@ -162,3 +170,5 @@ function solve() {
     drawGrid(R, C);
     drawSquares(R, C);
 }
+
+
