@@ -3,30 +3,79 @@
 <html>
 
 <head>
-    <title>TODO supply a title</title>
+    <title>Google Kickstart 2017. Round A. Problem A.</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <style>
     html,
     body {
         width: 100%;
         height: 100%;
-        margin: 0px;
+        margin: 20px;
+    }
+
+    input {
+        background-color: none;
+        border: 1px solid #A1C1BD;
+        line-height: 0;
+        font-size: 17px;
+        width: 80px;
+        box-sizing: border-box;
+        padding: 10px 15px;
+        border-radius: 60px;
+        color: #6D9C96;
+        font-weight: 100;
+        letter-spacing: 0.01em;
+        position: relative;
+        z-index: 1;
+    }
+
+    input:focus {
+        outline: none;
+        background: #6D9C96;
+        color: #ffffff;
+    }
+
+    label {
+        color: #6D9C96;
+        margin-left: 27px;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .center {
+        width: 800px;
     }
 </style>
 
 <body>
-    <label for="rowAmount">Number of rows: </label>
-    <input id="rowAmount" type="number" />
-    <label for="colAmount">Number of columns: </label>
-    <input id="colAmount" type="number" />
-    <input type="button" onclick="solve();" value="Solve" />
+    <div class="container">
+        <div class="center">
+            <label for="rowAmount" class="inputTitle">Rows: </label>
+            <input id="rowAmount" class="inputTitle" type="number" />
+            <label for="colAmount">Columns: </label>
+            <input id="colAmount" type="number" />
+            <input type="button" onclick="solve();" value="Solve" />
+        </div>
+    </div>
+    <div class="container">
+        <div class="center">
+            <label>Number of squares:</label>
+            <strong>
+                <span id="result"></span>
+            </strong>
+        </div>
+    </div>
 
-    <div>
+    <div class="container">
+        <div class="center">
+            <canvas id="myCanvas" width="1" height="1"></canvas>
+        </div>
 
-        <canvas id="myCanvas" width="500" height="500"></canvas>
     </div>
 </body>
 <script src="script.js"></script>

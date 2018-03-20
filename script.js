@@ -16,10 +16,7 @@ function getRandomColor() {
 }
 
 function drawSquare(x, y, l) {
-    //optional:
-    var R = parseInt(document.getElementById('rowAmount').value);
-    var C = parseInt(document.getElementById('colAmount').value);
-    drawGrid(R, C);  // end optional
+    resetGrid();  // end optional
     ctx.beginPath();
     ctx.strokeStyle = getRandomColor();
     ctx.fillStyle = getRandomColor();
@@ -29,9 +26,7 @@ function drawSquare(x, y, l) {
 
 function drawDistortedSquare(x1, y1, x2, y2, x3, y3, x4, y4) {
     //optional:
-    var R = parseInt(document.getElementById('rowAmount').value);
-    var C = parseInt(document.getElementById('colAmount').value);
-    drawGrid(R, C);  // end optional
+    resetGrid(); // end optional
     ctx.fillStyle = getRandomColor();
     ctx.moveTo(x1, y1);
     ctx.beginPath();
@@ -42,26 +37,32 @@ function drawDistortedSquare(x1, y1, x2, y2, x3, y3, x4, y4) {
     ctx.fill();
 }
 
+function setResult(s) {
+    document.getElementById("result").innerHTML = s;
+}
+
 function drawSquares(r, c) {
     var color = "#0000FE";
-
     var result = 0;
     var z = 1;
+    var delay = 500;
     for (let i = 0; i < r - 1; i++) {
         for (let j = 0; j < c - 1; j++) {
             t = 1;
             while (t < r - i && t < c - j) {
-                console.log((o.x + (j * s)) + "," + (o.y + (i * s)) + "," + (s * t));
-
-                setTimeout(drawSquare, 1000 * z, o.x + (j * s), o.y + (i * s), s * t);
-
+                setTimeout(drawSquare, delay * z, o.x + (j * s), o.y + (i * s), s * t);
+                setTimeout(setResult, delay * z, ++result);
                 t++;
                 z++;
-                result++;
+                //  result++;
             }
+        }
+    }
 
+    //do it again. So it looks more organized.
+    for (let i = 0; i < r - 1; i++) {
+        for (let j = 0; j < c - 1; j++) {
 
-            //now the real challenge
             for (let m = i + 1; m < r - 1; m++) {
                 for (let n = 0; n < j; n++) {
                     let p1x = j;
@@ -81,21 +82,23 @@ function drawSquares(r, c) {
 
                     if (p3x <= c - 1 && p3y <= r - 1 && p4x <= c - 1 && p4y <= r - 1) {
 
-                        setTimeout(drawDistortedSquare, 1000 * z, o.x + p1x * s, o.y + p1y * s, o.x + p2x * s, o.y + p2y * s, o.x + p3x * s, o.y + p3y * s, o.x + p4x * s, o.y + p4y * s);
-
+                        setTimeout(drawDistortedSquare, delay * z, o.x + p1x * s, o.y + p1y * s, o.x + p2x * s, o.y + p2y * s, o.x + p3x * s, o.y + p3y * s, o.x + p4x * s, o.y + p4y * s);
+                        setTimeout(setResult, delay * z, ++result);
                         z++;
-                        result++;
+                        //  result++;
+
                     }
-
-
                 }
             }
-
         }
-
     }
-    setTimeout(function () { alert(result); }, 1000 * z);
+    setTimeout(function () { alert("Completed"); }, delay * z);
+}
 
+function resetGrid() {
+    var R = parseInt(document.getElementById('rowAmount').value);
+    var C = parseInt(document.getElementById('colAmount').value);
+    drawGrid(R, C);
 }
 
 function drawGrid(r, c) {
@@ -122,7 +125,6 @@ function drawGrid(r, c) {
         ctx.stroke();
     }
 
-
     //draw vertex
     ctx.strokeStyle = vertexGuideColor;
     ctx.fillStyle = "#cfe2f3";
@@ -144,6 +146,19 @@ function drawGrid(r, c) {
 function solve() {
     var R = parseInt(document.getElementById('rowAmount').value);
     var C = parseInt(document.getElementById('colAmount').value);
+
+    if (!R || !C) {
+        alert("Invalid number of columns or rows.");
+        return;
+    }
+    if (R > 20 || C > 20) {
+        alert("Use the formula for large numbers.");
+        return;
+    }
+    if (R < 0 || C < 0) {
+        alert("Invalid number of columns or rows.");
+        return;
+    }
     drawGrid(R, C);
     drawSquares(R, C);
 }
