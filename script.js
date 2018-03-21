@@ -64,7 +64,7 @@ function drawSquares(r, c) {
     //do it again. So it looks more organized.
     for (let i = 0; i < r - 1; i++) {
         for (let j = 0; j < c - 1; j++) {
-
+            console.log(     "Pi " + (i+1) + ", Pj: " + (j+1) + " | Ldiff: " + j + ", Rdiff: " +( c -1 - j));
             for (let m = i + 1; m < r - 1; m++) {
                 for (let n = 0; n < j; n++) {
                     let p1x = j;
@@ -83,7 +83,7 @@ function drawSquares(r, c) {
                     let p4y = p3y - diffy;
 
                     if (p3x <= c - 1 && p3y <= r - 1 && p4x <= c - 1 && p4y <= r - 1) {
-
+console.log("<>");
                         timeouts.push(setTimeout(drawDistortedSquare, delay * z, o.x + p1x * s, o.y + p1y * s, o.x + p2x * s, o.y + p2y * s, o.x + p3x * s, o.y + p3y * s, o.x + p4x * s, o.y + p4y * s));
                         timeouts.push(setTimeout(setResult, delay * z, ++result));
                         z++;
@@ -94,7 +94,7 @@ function drawSquares(r, c) {
             }
         }
     }
-    setTimeout(function () { alert("Completed"); }, delay * z);
+    timeouts.push(setTimeout(function () { alert("Completed"); }, delay * z));
 }
 
 function stop() {
